@@ -14,7 +14,7 @@ class User(db.Model):
         return {
             "id": self.id,
             "username": self.username,
-            "users":self.all_users_todos
+            "users": self.all_users_todos
             # do not serialize the password, its a security breach
         }
 

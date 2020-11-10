@@ -34,13 +34,13 @@ def sitemap():
 def get_all_todos(user_url):
     username = User.get_user(user_url)
     user_save = username
-    return jsonify(user_save), 200
+    return "Username get", 200
 
 @app.route('/todo/user/<user_url>', methods=['POST'])
 def new_user(user_url):
     new_user = User(username = user_url)
     new_user.add_new_user()
-    return jsonify(new_user.serialize()), "Username created", 201
+    return "Username created", 201
 
 @app.route('/todo/user/<user_url>/task', methods=['POST'])
 def post_new_todos(user_url):
@@ -52,7 +52,7 @@ def post_new_todos(user_url):
     new_todo = Todo(user_id = user_url, label = body["label"], done = body["done"])
     new_todo.add_todo()
 
-    return jsonify(new_todo.serialize()),"Todo Added", 200
+    return "Todo Added", 200
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
