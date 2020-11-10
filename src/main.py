@@ -34,7 +34,7 @@ def sitemap():
 def get_all_todos(user_url):
     username = User.get_user(user_url)
     user_save = username
-    return jsonify(user_url), 200
+    return jsonify(user_save), 200
 
 @app.route('/todo/user/<user_url>', methods=['POST'])
 def new_user(user_url):
@@ -49,7 +49,7 @@ def post_new_todos(user_url):
     if body is None:
         return "The request body is null", 400
 
-    new_todo = Todo(user_id = ["user_url"], label = body["label"], done = body["done"])
+    new_todo = Todo(user_id = user_url, label = body["label"], done = body["done"])
     new_todo.add_todo()
 
     return jsonify(new_todo.serialize()),"Todo Added", 200
