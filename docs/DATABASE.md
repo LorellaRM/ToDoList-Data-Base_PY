@@ -9,7 +9,7 @@ $ mysql
 SHOW databases;
 ```
 3. If you don't see the example database create it by typing:
-```sql
+<!-- ```sql -->
 CREATE DATABASE example;
 ```
 Note: Make sure to update the `DB_CONNECTION_STRING` on the `.env` file with the correct database name.
