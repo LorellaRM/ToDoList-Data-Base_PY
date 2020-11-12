@@ -58,6 +58,13 @@ def post_new_todos(username):
 
     return "Todo Added", 200
 
+@app.route('/todo/user/<username>', methods=['DELETE'])
+def delete_user(username):
+    user_to_delete = User.query.filter_by(username = username).first()
+    user_to_delete.delete()
+
+    return "User deleted, see you soon", 200
+
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3000))

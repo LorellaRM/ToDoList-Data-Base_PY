@@ -27,6 +27,10 @@ class User(db.Model):
         user = User.query.filter_by(username = username)
         return user.serialize()
 
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
 class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     label = db.Column(db.String(250), unique=False, nullable=False)
@@ -47,6 +51,7 @@ class Todo(db.Model):
     def add_todo(self):
         db.session.add(self)
         db.session.commit()
+
 
     # @classmethod
     # def get_todo(cls):
