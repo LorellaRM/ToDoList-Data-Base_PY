@@ -38,10 +38,10 @@ def get_all_todos(username):
         'data': [todo.serialize() for todo in todos]
     }), 200
 
-@app.route('/todo/user/', methods=['POST'])
-def new_user():
-    body = request.get_json()
-    new_user = User(username = body["username"])
+@app.route('/todo/user/<username>', methods=['POST'])
+def new_user(username):
+    # body = request.get_json()
+    new_user = User(username = username)
     new_user.add_new_user()
     return "Username created", 201
 
