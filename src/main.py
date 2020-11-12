@@ -30,26 +30,30 @@ def handle_invalid_usage(error):
 def sitemap():
     return generate_sitemap(app)
 
-@app.route('/todo/user/<user_url>', methods=['GET'])
-def get_all_todos(user_url):
-    username = User.get_user(user_url)
-    user_save = username
-    return "Username get", 200
+@app.route('/todo/user/<username>', methods=['GET'])
+def get_all_todos(username):
+    user = User.query.filter_by(username = username).first()
+    todos = Todo.query.filter_by(user_id = user.id).all()
+    return jsonify({
+        'data': [todo.serialize() for todo in todos]
+    }), 200
 
-@app.route('/todo/user/<user_url>', methods=['POST'])
-def new_user(user_url):
-    new_user = User(username = user_url)
+@app.route('/todo/user/<username>', methods=['POST'])
+def new_user(username):
+    # body = request.get_json()
+    new_user = User(username = username)
     new_user.add_new_user()
     return "Username created", 201
 
-@app.route('/todo/user/<user_url>/task', methods=['POST'])
-def post_new_todos(user_url):
+@app.route('/todo/user/<username>/task', methods=['POST'])
+def post_new_todos(username):
     body = request.get_json()
     print(body)
     if body is None:
         return "The request body is null", 400
 
-    new_todo = Todo(user_id = user_url, label = body["label"], done = body["done"])
+    user = User.query.filter_by(username = username).first()
+    new_todo = Todo(user_id = user.id, label = body["label"], done = body["done"])
     new_todo.add_todo()
 
     return "Todo Added", 200
