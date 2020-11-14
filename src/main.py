@@ -53,8 +53,19 @@ def post_new_todos(username):
         return "The request body is null", 400
 
     user = User.query.filter_by(username = username).first()
-    new_todo = Todo(user_id = user.id, label = body["label"], done = body["done"])
+    new_todo = Todo(user_id = username, label = body["label"], done = body["done"])
     new_todo.add_todo()
+
+    return "Todo Added", 200
+
+@app.route('/todo/user/<username>/task/<int:id>', methods=['PUT'])
+def update_todos(username, id):
+    body = request.get_json()
+    print(body)
+    if body is None:
+        return "The request body is null", 400
+
+    Todo.update_todo(id, body)
 
     return "Todo Added", 200
 

@@ -52,6 +52,14 @@ class Todo(db.Model):
         db.session.add(self)
         db.session.commit()
 
+    def update_todo(id, body):
+        task = Todo.query.get(id)
+        task.label = body["label"]
+        task.done = body["done"]
+        db.session.commit()
+
+
+
 
     # @classmethod
     # def get_todo(cls):
